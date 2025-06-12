@@ -18,6 +18,18 @@ export class TrainingService {
     return training;
   };
 
+  getAllByUserId = async (idUser: number): Promise<Training[] | null> => {
+    const trainings = await this.trainingRepository.findBy({
+      user: { id: idUser },
+    });
+
+    if (trainings) {
+      return trainings;
+    } else {
+      return null;
+    }
+  };
+
   create = async (
     trainingData: Omit<Training, "id">
   ): Promise<Training | null> => {
@@ -32,7 +44,10 @@ export class TrainingService {
     return trainingCreated;
   };
 
-  async update(idTraining: number, trainingData: Partial<Training>): Promise<Training | null> {
+  async update(
+    idTraining: number,
+    trainingData: Partial<Training>
+  ): Promise<Training | null> {
     const trainingToUptade = await this.trainingRepository.findOneBy({
       id: idTraining,
     });

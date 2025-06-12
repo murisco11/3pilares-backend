@@ -24,6 +24,17 @@ export class TrainingController {
     }
   };
 
+  getAllByUserId = async (req: Request, res: Response): Promise<Response> => {
+    const userId: number = Number(req.params.id)
+    const trainings = await this.trainingService.getAllByUserId(userId)
+
+    if (trainings) {
+      return res.status(200).json(trainings)
+    } else {
+      return res.status(200).json([])
+    }
+  }
+
   create = async (req: Request, res: Response): Promise<Response> => {
     try {
       const trainingData: Training = req.body;

@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "../entities/User";
 import { Training } from "../entities/Training";
+import { DayTraining } from "../entities/DayTraining";
 
 export const DataBase = new DataSource({
   type: "mysql",
@@ -12,7 +13,7 @@ export const DataBase = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [User, Training],
+  entities: [User, Training, DayTraining],
   migrations: [],
   subscribers: [],
 });

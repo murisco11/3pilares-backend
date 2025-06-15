@@ -9,7 +9,7 @@ export class UserService {
     this.userRepository = DataBase.getRepository(User);
   }
 
-  async findById(idUser: number): Promise<User | null> {
+  async getById(idUser: number): Promise<User | null> {
     const user = this.userRepository.findOneBy({
       id: idUser,
     });

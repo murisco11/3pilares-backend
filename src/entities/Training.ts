@@ -12,8 +12,10 @@ import {
   Column,
   JoinColumn,
   CreateDateColumn,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
+import { DayTraining } from "./DayTraining";
 
 @Entity("training")
 export class Training {
@@ -37,4 +39,7 @@ export class Training {
   })
   @JoinColumn({ name: "id_user" })
   user!: User;
+
+  @OneToMany(() => DayTraining, (dayTraining) => dayTraining.training)
+  dayTrainings!: DayTraining[];
 }

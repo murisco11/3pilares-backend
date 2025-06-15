@@ -13,7 +13,7 @@ export class UserController {
     try {
       const idUser: number = Number(req.params.id);
 
-      const user = await this.userService.findById(idUser);
+      const user = await this.userService.getById(idUser);
 
       if (user) {
         return res.status(200).json(user);

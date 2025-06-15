@@ -25,13 +25,17 @@ export class TrainingController {
   };
 
   getAllByUserId = async (req: Request, res: Response): Promise<Response> => {
-    const userId: number = Number(req.params.id)
-    const trainings = await this.trainingService.getAllByUserId(userId)
-
-    if (trainings) {
-      return res.status(200).json(trainings)
-    } else {
-      return res.status(200).json([])
+    try {
+      const userId: number = Number(req.params.id)
+      const trainings = await this.trainingService.getAllByUserId(userId)
+  
+      if (trainings) {
+        return res.status(200).json(trainings)
+      } else {
+        return res.status(200).json([])
+      }
+    } catch (error) {
+      return res.status(500).json({ message: "Error on server" });
     }
   }
 

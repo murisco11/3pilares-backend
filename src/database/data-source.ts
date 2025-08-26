@@ -3,6 +3,8 @@ import { DataSource } from "typeorm";
 import { User } from "../entities/User";
 import { Training } from "../entities/Training";
 import { DayTraining } from "../entities/DayTraining";
+import { DBExercise } from "../entities/DBExercise";
+import { Exercise } from "../entities/Exercise";
 
 export const DataBase = new DataSource({
   type: "mysql",
@@ -13,7 +15,7 @@ export const DataBase = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [User, Training, DayTraining],
+  entities: [User, Training, DayTraining, DBExercise, Exercise],
   migrations: [],
   subscribers: [],
 });

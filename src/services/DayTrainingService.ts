@@ -30,11 +30,16 @@ export class DayTrainingService {
     }
   }
 
-  async create(dayTrainingData: Omit<DayTraining, "id">): Promise<DayTraining> {
+  async create(dayTrainingData: Omit<DayTraining, "id">): Promise<DayTraining | null> {
     const dayTraining = this.dayTrainingRepository.create(dayTrainingData);
     await this.dayTrainingRepository.save(dayTraining);
 
-    return dayTraining;
+    const dayTrainingCreated = this.dayTrainingRepository.findOne({
+      where: { id: dayTraining.id },
+      relations: ["training"],
+    });
+
+    return dayTrainingCreated;
   }
 
   async update(

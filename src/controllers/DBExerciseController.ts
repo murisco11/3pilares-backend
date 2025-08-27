@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DBExercise } from "../entities/DBExercise";
-import { DBExerciseService } from "../services/DBExercise";
+import { DBExerciseService } from "../services/DBExerciseService";
 
 export class DBExerciseController {
   private readonly dBExerciseController: DBExerciseService;
@@ -26,8 +26,17 @@ export class DBExerciseController {
   };
 
   getAll = async (req: Request, res: Response): Promise<Response> => {
+    const muscleGroup: string = req.body.muscle_group;
+    console.log(muscleGroup)
     try {
-      const dBExercises = await this.dBExerciseController.getAll();
+      let dBExercises: DBExercise[] | null;
+      if (!muscleGroup) {
+        dBExercises = await this.dBExerciseController.getAll();
+      } else {
+        dBExercises = await this.dBExerciseController.getByMuscleGroup(
+          muscleGroup
+        );
+      }
 
       if (dBExercises) {
         return res.status(200).json(dBExercises);
@@ -37,8 +46,8 @@ export class DBExerciseController {
     } catch (error) {
       return res.status(500).json({ message: "Error on server" });
     }
-  }
-
+  };
+  
   create = async (req: Request, res: Response): Promise<Response> => {
     try {
       const dBExerciseData: DBExercise = req.body;
@@ -46,13 +55,13 @@ export class DBExerciseController {
       const newDBExercise = await this.dBExerciseController.create(
         dBExerciseData
       );
-
+      
       return res.status(201).json(newDBExercise);
     } catch (error) {
       return res.status(500).json({ message: "Error: ", error });
     }
   };
-
+  
   createMany = async (req: Request, res: Response): Promise<Response> => {
     try {
       const dBExercisesData: DBExercise[] = req.body;
@@ -61,6 +70,7 @@ export class DBExerciseController {
       );
       return res.status(201).json(newDBExercises);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ message: "Error: ", error });
     }
   };

@@ -22,6 +22,14 @@ export class DBExerciseService {
     return dBExercises;
   }
 
+  async getByMuscleGroup(muscleGroup: string): Promise<DBExercise[] | null> {
+    const dBExercises = await this.dBExerciseRepository.find({
+      where: { muscle_group: muscleGroup },
+    });
+
+    return dBExercises;
+  }
+
   async create(dBExerciseData: Omit<DBExercise, "id">): Promise<DBExercise> {
     const dBExercise = this.dBExerciseRepository.create(dBExerciseData);
     await this.dBExerciseRepository.save(dBExercise);
@@ -29,13 +37,18 @@ export class DBExerciseService {
     return dBExercise;
   }
 
-  async createMany(dBExercisesData: Omit<DBExercise, "id">[]): Promise<DBExercise[]> {
+  async createMany(
+    dBExercisesData: Omit<DBExercise, "id">[]
+  ): Promise<DBExercise[]> {
     const dBExercises = this.dBExerciseRepository.create(dBExercisesData);
     await this.dBExerciseRepository.save(dBExercises);
     return dBExercises;
   }
 
-  async update(idDBExercise: number, dBExerciseData: Partial<DBExercise>): Promise<DBExercise | null> {
+  async update(
+    idDBExercise: number,
+    dBExerciseData: Partial<DBExercise>
+  ): Promise<DBExercise | null> {
     const dBExerciseToUpdate = await this.dBExerciseRepository.findOneBy({
       id: idDBExercise,
     });

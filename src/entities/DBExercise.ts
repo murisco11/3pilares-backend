@@ -24,6 +24,6 @@ export class DBExercise {
   @Column()
     muscle_group!: string;
 
-  @OneToMany(() => Exercise, (exercise) => exercise.dBExcercise)
+  @OneToMany(() => Exercise, (exercise) => exercise.dbExercise)
   exercises!: Exercise[];
 }

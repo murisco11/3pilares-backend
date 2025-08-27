@@ -4,28 +4,33 @@ import {
   ManyToOne,
   Column,
   JoinColumn,
-  CreateDateColumn,
 } from "typeorm";
-import { Training } from "./Training";
 import { DBExercise } from "./DBExercise";
+import { DayTraining } from "./DayTraining";
 
 @Entity("exercise")
 export class Exercise {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  name!: string;
+  @Column({ length: 255, default: "" })
+  obs!: string;
 
-  @Column()
-  description!: string;
+  @Column({ type: "int" })
+  series!: number;
 
-  @Column()
-  day!: number;
+  @Column({ length: 1000 })
+  reps!: string;
 
-  @ManyToOne(() => DBExercise, (dBExercise) => dBExercise.exercises, {
+  @ManyToOne(() => DayTraining, (dayTraining) => dayTraining.exercises, {
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "id_dBExercise" })
-  dBExcercise!: DBExercise;
+  @JoinColumn({ name: "id_day_training" })
+  dayTraining!: DayTraining;
+
+  @ManyToOne(() => DBExercise, (dbExercise) => dbExercise.exercises, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "id_db_exercise" })
+  dbExercise!: DBExercise;
 }

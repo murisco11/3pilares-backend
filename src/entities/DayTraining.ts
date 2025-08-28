@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Training } from "./Training";
 import { Exercise } from "./Exercise";
+import { RegisterDayTraining } from "./RegisterDayTraining";
 
 @Entity("dayTraining")
 export class DayTraining {
@@ -28,6 +29,12 @@ export class DayTraining {
   })
   @JoinColumn({ name: "id_training" })
   training!: Training;
+
+  @OneToMany(
+    () => RegisterDayTraining,
+    (registerDayTraining) => registerDayTraining.dayTrainings
+  )
+  registerDayTrainings!: RegisterDayTraining[];
 
   @OneToMany(() => Exercise, (exercise) => exercise.dayTraining, {
     cascade: true,

@@ -4,9 +4,11 @@ import {
   ManyToOne,
   Column,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { DBExercise } from "./DBExercise";
 import { DayTraining } from "./DayTraining";
+import { RegisterExercise } from "./RegisterExercise";
 
 @Entity("exercise")
 export class Exercise {
@@ -19,8 +21,14 @@ export class Exercise {
   @Column({ type: "int" })
   series!: number;
 
+  @Column({ type: "int", default: 120 }) // Em segundos
+  rest!: number;
+
   @Column({ length: 1000 })
   reps!: string;
+
+  @OneToMany(() => RegisterExercise, (registerExercise) => registerExercise.exercises)
+  registerExericses!: RegisterExercise[]
 
   @ManyToOne(() => DayTraining, (dayTraining) => dayTraining.exercises, {
     onDelete: "CASCADE",

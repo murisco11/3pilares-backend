@@ -5,6 +5,8 @@ import { Training } from "../entities/Training";
 import { DayTraining } from "../entities/DayTraining";
 import { DBExercise } from "../entities/DBExercise";
 import { Exercise } from "../entities/Exercise";
+import { RegisterExercise } from "../entities/RegisterExercise";
+import { RegisterDayTraining } from "../entities/RegisterDayTraining";
 
 export const DataBase = new DataSource({
   type: "mysql",
@@ -15,7 +17,7 @@ export const DataBase = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [User, Training, DayTraining, DBExercise, Exercise],
+  entities: [User, Training, DayTraining, DBExercise, Exercise, RegisterExercise, RegisterDayTraining],
   migrations: [],
   subscribers: [],
 });

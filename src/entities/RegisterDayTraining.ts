@@ -4,8 +4,10 @@ import {
   ManyToOne,
   Column,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { DayTraining } from "./DayTraining";
+import { RegisterExercise } from "./RegisterExercise";
 @Entity("registerDayTraining")
 export class RegisterDayTraining {
   @PrimaryGeneratedColumn()
@@ -20,4 +22,10 @@ export class RegisterDayTraining {
   )
   @JoinColumn({ name: "id_day_training" })
   dayTrainings!: DayTraining;
+
+  @OneToMany(
+    () => RegisterExercise,
+    (registerExercise) => registerExercise.registerDayTraining
+  )
+  registerExercises!: RegisterExercise[];
 }

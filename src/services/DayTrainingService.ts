@@ -12,7 +12,7 @@ export class DayTrainingService {
   async getById(idDayTraining: number): Promise<DayTraining | null> {
     const dayTraining = this.dayTrainingRepository.findOne({
       where: { id: idDayTraining },
-      relations: ["training"],
+      relations: ["training", "exercises"],
     });
 
     return dayTraining;
@@ -36,7 +36,7 @@ export class DayTrainingService {
 
     const dayTrainingCreated = this.dayTrainingRepository.findOne({
       where: { id: dayTraining.id },
-      relations: ["training"],
+      relations: ["training", "exercises"],
     });
 
     return dayTrainingCreated;

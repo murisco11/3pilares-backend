@@ -44,6 +44,23 @@ export class RegisterDayTrainingService {
     return registerDayTraining;
   };
 
+  getByDayTraining = async (
+    idDayTraining: number
+  ): Promise<RegisterDayTraining[] | null> => {
+    console.log(idDayTraining)
+    const registerDayTrainings = await this.registerDayTrainingRepository.find({
+      where: { dayTrainings: { id: idDayTraining } },
+      relations: [
+        "dayTrainings",
+        "registerExercises",
+        "registerExercises.exercises",
+        "registerExercises.registerSeries",
+      ],
+    });
+
+    return registerDayTrainings;
+  };
+
   create = async (
     registerDayTrainingData: Omit<
       RegisterDayTraining,
@@ -113,25 +130,25 @@ export class RegisterDayTrainingService {
     );
   };
 
-  async update(
-    idRegisterDayTraining: number,
-    registerDayTrainingData: Partial<RegisterDayTraining>
-  ): Promise<RegisterDayTraining | null> {
-    const registerDayTrainingToUptade =
-      await this.registerDayTrainingRepository.findOneBy({
-        id: idRegisterDayTraining,
-      });
+  // async update(
+  //   idRegisterDayTraining: number,
+  //   registerDayTrainingData: Partial<RegisterDayTraining>
+  // ): Promise<RegisterDayTraining | null> {
+  //   const registerDayTrainingToUptade =
+  //     await this.registerDayTrainingRepository.findOneBy({
+  //       id: idRegisterDayTraining,
+  //     });
 
-    if (registerDayTrainingToUptade) {
-      Object.assign(registerDayTrainingToUptade, registerDayTrainingData);
+  //   if (registerDayTrainingToUptade) {
+  //     Object.assign(registerDayTrainingToUptade, registerDayTrainingData);
 
-      this.registerDayTrainingRepository.save(registerDayTrainingToUptade);
+  //     this.registerDayTrainingRepository.save(registerDayTrainingToUptade);
 
-      return registerDayTrainingToUptade;
-    } else {
-      return null;
-    }
-  }
+  //     return registerDayTrainingToUptade;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   delete = async (idRegisterDayTraining: number): Promise<number | null> => {
     const registerDayTrainingToDelete =

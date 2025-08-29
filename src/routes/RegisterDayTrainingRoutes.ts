@@ -5,8 +5,9 @@ const registerDayTrainingRoutes = Router();
 const registerDayTrainingController = new RegisterDayTrainingController();
 
 registerDayTrainingRoutes.get("/:id", registerDayTrainingController.getById);
+registerDayTrainingRoutes.get("/daytraining/:id", registerDayTrainingController.getByDayTraining);
 registerDayTrainingRoutes.delete("/:id", registerDayTrainingController.delete);
-registerDayTrainingRoutes.put("/", registerDayTrainingController.update);
+// registerDayTrainingRoutes.put("/", registerDayTrainingController.update);
 registerDayTrainingRoutes.post("/", registerDayTrainingController.create);
 
 export { registerDayTrainingRoutes };

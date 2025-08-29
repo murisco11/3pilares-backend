@@ -5,6 +5,8 @@ import { dayTrainingRoutes } from "./routes/dayTrainingRoutes";
 import { dBExerciseRoutes } from "./routes/dBExerciseRoutes";
 import { exerciseRoutes } from "./routes/exerciseRoutes";
 import { registerDayTrainingRoutes } from "./routes/RegisterDayTrainingRoutes";
+import { RegisterExercise } from "./entities/RegisterExercise";
+import { registerExerciseRoutes } from "./routes/RegisterExerciseRoutes";
 
 const app = express(); // App do Express
 
@@ -15,5 +17,7 @@ app.use("/training", trainingRoutes); // Rota "training" utilizará userRoutes
 app.use("/daytraining", dayTrainingRoutes); // Rota "training" utilizará userRoutes
 app.use("/dbexercise", dBExerciseRoutes); // Rota "dbexercise" utilizará dbExerciseRoutes
 app.use("/exercise", exerciseRoutes); // Rota "exercise" utilizará exerciseRoutes
-app.use("/registerdaytraining", registerDayTrainingRoutes); // Rota "exercise" utilizará exerciseRoutes
+app.use("/registerexercise", registerExerciseRoutes); // Rota "registerExercise" utilizará exerciseRoutes
+app.use("/registerdaytraining", registerDayTrainingRoutes); // Rota "registerDayTraining" utilizará exerciseRoutes
 export { app };
+

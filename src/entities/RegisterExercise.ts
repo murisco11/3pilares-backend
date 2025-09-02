@@ -8,6 +8,7 @@ import {
 import { Exercise } from "./Exercise";
 import { RegisterSerie } from "./RegisterSeries";
 import { RegisterDayTraining } from "./RegisterDayTraining";
+import { User } from "./User";
 
 @Entity("registerExercise")
 export class RegisterExercise {
@@ -19,6 +20,12 @@ export class RegisterExercise {
   })
   @JoinColumn({ name: "id_exercise" })
   exercises!: Exercise;
+
+  @ManyToOne(() => User, (user) => user.registerExercises , {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "id_user" })
+  users!: User;
 
   @ManyToOne(
     () => RegisterDayTraining,

@@ -49,23 +49,23 @@ export class RegisterExerciseController {
 //     } catch (error) {
 //       return res.status(500).json({ message: "Error on server" });
 //     }
-//   };
+  // };
 
-//   update = async (req: Request, res: Response): Promise<Response> => {
-//     try {
-//       const trainingData: RegisterExercise = req.body;
+  update = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const trainingData: RegisterExercise = req.body;
 
-//       const updateRegisterExercise = await this.trainingService.update(trainingData.id, trainingData);
+      const updateRegisterExercise = await this.trainingService.update(trainingData.id, trainingData);
 
-//       if (updateRegisterExercise) {
-//         return res.status(200).json(updateRegisterExercise);
-//       } else {
-//         return res.status(404).json({ message: "RegisterExercise not found" });
-//       }
-//     } catch (error) {
-//       return res.status(500).json({ message: "Error: ", error });
-//     }
-//   };
+      if (updateRegisterExercise) {
+        return res.status(200).json(updateRegisterExercise);
+      } else {
+        return res.status(404).json({ message: "RegisterExercise not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ message: "Error: ", error });
+    }
+  };
 
   delete = async (req: Request, res: Response): Promise<Response> => {
     try {

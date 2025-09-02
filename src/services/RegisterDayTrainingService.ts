@@ -47,7 +47,7 @@ export class RegisterDayTrainingService {
   getByDayTraining = async (
     idDayTraining: number
   ): Promise<RegisterDayTraining[] | null> => {
-    console.log(idDayTraining)
+    console.log(idDayTraining);
     const registerDayTrainings = await this.registerDayTrainingRepository.find({
       where: { dayTrainings: { id: idDayTraining } },
       relations: [
@@ -92,16 +92,19 @@ export class RegisterDayTrainingService {
             {
               exercises: exercise,
               registerDayTraining: newRegisterDayTraining,
+              users: {id: registerDayTrainingData.users.id}
             }
           );
           await transactionalEntityManager.save(newRegisterExercise);
-
+          
           const seriesCount = exercise.series || 0;
           const seriesToCreate: RegisterSerie[] = [];
-
+          
           for (let i = 0; i < seriesCount; i++) {
             const newSerie = transactionalEntityManager.create(RegisterSerie, {
               registerExercises: newRegisterExercise,
+              users: {id: registerDayTrainingData.users.id},
+              order: i + 1,
             });
             seriesToCreate.push(newSerie);
           }
@@ -118,6 +121,7 @@ export class RegisterDayTrainingService {
             where: { id: newRegisterDayTraining.id },
             relations: [
               "dayTrainings",
+              "users",
               "registerExercises",
               "registerExercises.exercises",
               "registerExercises.registerSeries",

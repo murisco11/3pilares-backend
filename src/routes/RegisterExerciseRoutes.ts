@@ -7,7 +7,7 @@ const registerExerciseController = new RegisterExerciseController();
 registerExerciseRoutes.get("/:id", registerExerciseController.getById);
 registerExerciseRoutes.get("/daytraining/:id", registerExerciseController.getAllByUserId);
 registerExerciseRoutes.delete("/:id", registerExerciseController.delete);
-// registerExerciseRoutes.put("/", registerExerciseController.update);
+registerExerciseRoutes.put("/", registerExerciseController.update);
 // registerExerciseRoutes.post("/", registerExerciseController.create);
 
 export { registerExerciseRoutes };

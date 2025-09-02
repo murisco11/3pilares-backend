@@ -1,6 +1,9 @@
 import { Repository } from "typeorm";
 import { RegisterExercise } from "../entities/RegisterExercise";
 import { DataBase } from "../database/data-source";
+import { Exercise } from "../entities/Exercise";
+import { RegisterSerie } from "../entities/RegisterSeries";
+
 
 export class RegisterExerciseService {
   private readonly registerExerciseRepository: Repository<RegisterExercise>;
@@ -8,13 +11,25 @@ export class RegisterExerciseService {
   constructor() {
     this.registerExerciseRepository = DataBase.getRepository(RegisterExercise);
   }
+  private getSeries = (registerExercises: RegisterExercise[]): RegisterSerie[] => {
+    let rSeries: RegisterSerie[] = [];
+
+    for (let i = 0; i < registerExercises.length; i++) {
+      let registerExercise = registerExercises[i];
+      for (let j = 0; j < registerExercise.registerSeries.length; j++) {
+        let serie = registerExercise.registerSeries[j];
+        rSeries.push(serie);
+      }
+    }
+    return rSeries;
+  };
 
   getById = async (
     idRegisterExercise: number
   ): Promise<RegisterExercise | null> => {
     const registerExercise = await this.registerExerciseRepository.findOne({
       where: { id: idRegisterExercise },
-      relations: ["registerSeries", "registerDayTraining"],
+      relations: ["registerSeries", "registerDayTraining", "users"],
     });
 
     return registerExercise;
@@ -25,7 +40,7 @@ export class RegisterExerciseService {
   ): Promise<RegisterExercise[] | null> => {
     const registerExercises = await this.registerExerciseRepository.find({
       where: { registerDayTraining: { id: idRegisterDayTraining } },
-      relations: ["registerSeries", "registerDayTraining"],
+      relations: ["registerSeries", "registerDayTraining", "users"],
     });
 
     if (registerExercises) {
@@ -49,24 +64,25 @@ export class RegisterExerciseService {
   //     return registerExerciseCreated;
   //   };
 
-  //   async update(
-  //     idRegisterExercise: number,
-  //     registerExerciseData: Partial<RegisterExercise>
-  //   ): Promise<RegisterExercise | null> {
-  //     const registerExerciseToUptade = await this.registerExerciseRepository.findOneBy({
-  //       id: idRegisterExercise,
-  //     });
+  async update(
+    idRegisterExercise: number,
+    registerExerciseData: Partial<RegisterExercise>
+  ): Promise<RegisterExercise | null> {
+    const registerExerciseToUptade =
+      await this.registerExerciseRepository.findOneBy({
+        id: idRegisterExercise,
+      });
 
-  //     if (registerExerciseToUptade) {
-  //       Object.assign(registerExerciseToUptade, registerExerciseData);
+    if (registerExerciseToUptade) {
+      Object.assign(registerExerciseToUptade, registerExerciseData);
 
-  //       this.registerExerciseRepository.save(registerExerciseToUptade);
+      this.registerExerciseRepository.save(registerExerciseToUptade);
 
-  //       return registerExerciseToUptade;
-  //     } else {
-  //       return null;
-  //     }
-  //   }
+      return registerExerciseToUptade;
+    } else {
+      return null;
+    }
+  }
 
   delete = async (idRegisterExercise: number): Promise<number | null> => {
     const registerExerciseToDelete =
@@ -82,4 +98,17 @@ export class RegisterExerciseService {
       return null;
     }
   };
+
+  async bestExercise(dayTrainingId: number): Promise<Exercise | null> {
+    const registerExercises: RegisterExercise[] =
+      await this.registerExerciseRepository.find({
+        where: { registerDayTraining: { dayTrainings: { id: dayTrainingId } } },
+      });
+
+
+    const series: RegisterSerie[] = this.getSeries(registerExercises);
+    const dfSeries = dfd. 
+
+    return null;
+  }
 }

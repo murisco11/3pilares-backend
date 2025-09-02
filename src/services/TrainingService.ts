@@ -12,7 +12,7 @@ export class TrainingService {
   getById = async (idTraining: number): Promise<Training | null> => {
     const training = await this.trainingRepository.findOne({
       where: { id: idTraining },
-      relations: ["user"],
+      relations: ["users"],
     });
 
     return training;
@@ -20,7 +20,7 @@ export class TrainingService {
 
   getAllByUserId = async (idUser: number): Promise<Training[] | null> => {
     const trainings = await this.trainingRepository.findBy({
-      user: { id: idUser },
+      users: { id: idUser },
     });
 
     if (trainings) {
@@ -38,7 +38,7 @@ export class TrainingService {
 
     const trainingCreated = this.trainingRepository.findOne({
       where: { id: training.id },
-      relations: ["user"],
+      relations: ["users"],
     });
 
     return trainingCreated;

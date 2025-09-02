@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { DayTraining } from "./DayTraining";
 import { RegisterExercise } from "./RegisterExercise";
+import { User } from "./User";
 @Entity("registerDayTraining")
 export class RegisterDayTraining {
   @PrimaryGeneratedColumn()
@@ -22,6 +23,12 @@ export class RegisterDayTraining {
   )
   @JoinColumn({ name: "id_day_training" })
   dayTrainings!: DayTraining;
+
+  @ManyToOne(() => User, (user) => user.registerDayTrainings, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "id_user" })
+  users!: User;
 
   @OneToMany(
     () => RegisterExercise,

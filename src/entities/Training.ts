@@ -38,7 +38,7 @@ export class Training {
     onDelete: "CASCADE",
   })
   @JoinColumn({ name: "id_user" })
-  user!: User;
+  users!: User;
 
   @OneToMany(() => DayTraining, (dayTraining) => dayTraining.training)
   dayTrainings!: DayTraining[];

@@ -9,6 +9,7 @@ import {
 import { Training } from "./Training";
 import { Exercise } from "./Exercise";
 import { RegisterDayTraining } from "./RegisterDayTraining";
+import { User } from "./User";
 
 @Entity("dayTraining")
 export class DayTraining {
@@ -23,6 +24,12 @@ export class DayTraining {
 
   @Column()
   day!: number;
+  
+  @ManyToOne(() => User, (user) => user.dayTrainings, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "id_user" })
+  users!: User;
 
   @ManyToOne(() => Training, (training) => training.dayTrainings, {
     onDelete: "CASCADE",

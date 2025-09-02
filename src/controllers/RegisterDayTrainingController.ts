@@ -71,6 +71,7 @@ export class RegisterDayTrainingController {
   delete = async (req: Request, res: Response): Promise<Response> => {
     try {
       const idRegisterDayTraining: number = Number(req.params.id);
+      console.log(idRegisterDayTraining)
       const deleteRegisterDayTraining = await this.registerDayTrainingService.delete(idRegisterDayTraining);
 
       if (deleteRegisterDayTraining) {

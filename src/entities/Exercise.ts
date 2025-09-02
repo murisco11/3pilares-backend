@@ -9,6 +9,7 @@ import {
 import { DBExercise } from "./DBExercise";
 import { DayTraining } from "./DayTraining";
 import { RegisterExercise } from "./RegisterExercise";
+import { User } from "./User";
 
 @Entity("exercise")
 export class Exercise {
@@ -27,8 +28,17 @@ export class Exercise {
   @Column({ length: 1000 })
   reps!: string;
 
-  @OneToMany(() => RegisterExercise, (registerExercise) => registerExercise.exercises)
-  registerExericses!: RegisterExercise[]
+  @ManyToOne(() => User, (user) => user.exercises, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "id_user" })
+  users!: User;
+
+  @OneToMany(
+    () => RegisterExercise,
+    (registerExercise) => registerExercise.exercises
+  )
+  registerExericses!: RegisterExercise[];
 
   @ManyToOne(() => DayTraining, (dayTraining) => dayTraining.exercises, {
     onDelete: "CASCADE",

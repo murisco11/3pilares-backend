@@ -23,7 +23,7 @@ export class ExerciseService {
   ): Promise<Exercise[] | null> => {
     const exercises = await this.exerciseRepository.find({
       where: { dayTraining: { id: idDayTraining } },
-      relations: ["dbExercise"],
+      relations: ["dbExercise", "users"],
     });
 
     return exercises;
@@ -37,7 +37,7 @@ export class ExerciseService {
 
     const exerciseCreated = this.exerciseRepository.findOne({
       where: { id: exercise.id },
-      relations: ["dayTraining", "dbExercise"],
+      relations: ["dayTraining", "dbExercise", "users"],
     });
 
     return exerciseCreated;

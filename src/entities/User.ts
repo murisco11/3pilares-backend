@@ -1,5 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Training } from "./Training";
+import { RegisterExercise } from "./RegisterExercise";
+import { RegisterSerie } from "./RegisterSeries";
+import { RegisterDayTraining } from "./RegisterDayTraining";
+import { Exercise } from "./Exercise";
+import { DayTraining } from "./DayTraining";
 
 @Entity("user")
 export class User {
@@ -18,9 +23,24 @@ export class User {
   @Column({ type: "decimal", precision: 5, scale: 2, nullable: true })
   height!: number;
 
-  @OneToMany(() => Training, (training) => training.user)
+  @OneToMany(() => Training, (training) => training.users)
   trainings!: Training[];
 
   @Column({ type: "decimal", precision: 5, scale: 2, nullable: true })
   weight!: number;
+
+  @OneToMany(() => RegisterExercise, (registerExercises) => registerExercises.users)
+  registerExercises!: RegisterExercise[];
+
+  @OneToMany(() => RegisterSerie, (registerSerie) => registerSerie.users)
+  registerSeries!: RegisterSerie[];
+
+  @OneToMany(() => RegisterDayTraining, (registerDayTraining) => registerDayTraining.users)
+  registerDayTrainings!: RegisterDayTraining[];
+
+  @OneToMany(() => Exercise, (exercise) => exercise.users)
+  exercises!: Exercise[];
+  
+  @OneToMany(() => DayTraining, (dayTraining) => dayTraining.users)
+  dayTrainings!: DayTraining[];
 }

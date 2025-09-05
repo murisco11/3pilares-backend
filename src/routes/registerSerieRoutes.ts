@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RegisterSerieController } from "../controllers/RegisterSerieControler";
+import { RegisterSerieController } from "../controllers/RegisterSerieController";
 
 const registerSerieRoutes = Router();
 const registerSerieController = new RegisterSerieController();

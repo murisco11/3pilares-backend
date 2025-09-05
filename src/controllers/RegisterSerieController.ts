@@ -1,6 +1,6 @@
 import { RegisterSerie } from "../entities/RegisterSeries";
 import { Request, Response } from "express";
-import { RegisterSerieService } from "./../services/RegisterSerieService";
+import { RegisterSerieService } from "../services/RegisterSerieService";
 
 export class RegisterSerieController {
   private readonly registerSerieService: RegisterSerieService;
@@ -50,16 +50,12 @@ export class RegisterSerieController {
     }
   };
 
-  getByExercise = async (
-    req: Request,
-    res: Response
-  ): Promise<Response> => {
+  getByExercise = async (req: Request, res: Response): Promise<Response> => {
     try {
       const idExercise: number = Number(req.params.id);
-      const registerSerie =
-        await this.registerSerieService.getByExercises(
-          idExercise
-        );
+      const registerSerie = await this.registerSerieService.getByExercises(
+        idExercise
+      );
 
       if (registerSerie) {
         return res.status(200).json(registerSerie);

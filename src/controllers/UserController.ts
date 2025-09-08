@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
 import { User } from "../entities/User";
+import { AuthenticatedRequest } from "../middlewares/AuthMiddleware";
 
 export class UserController {
   private readonly userService: UserService;
@@ -9,9 +10,21 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  getById = async (req: Request, res: Response): Promise<Response> => {
+  getById = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const idUser: number = Number(req.params.id);
+      const userIdFromToken = req.user?.id;
+
+      console.log("User ID from token:", userIdFromToken);
+      console.log("user id: ", idUser);
+
+      if (userIdFromToken?.role !== 'admin' && idUser !== userIdFromToken?.id) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+
+      if (idUser !== userIdFromToken) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
 
       const user = await this.userService.getById(idUser);
 

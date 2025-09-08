@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { DayTrainingController } from "../controllers/DayTrainingController";
+import { authMiddleware } from "../middlewares/AuthMiddleware";
 
 const dayTrainingRoutes = Router();
 const dayTrainingController = new DayTrainingController();
+
+dayTrainingRoutes.use(authMiddleware);
 
 dayTrainingRoutes.get("/:id", dayTrainingController.getById);
 dayTrainingRoutes.get("/training/:id", dayTrainingController.getAllByTrainingId);

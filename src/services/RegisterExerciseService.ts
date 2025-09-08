@@ -107,7 +107,7 @@ export class RegisterExerciseService {
 
 
     const series: RegisterSerie[] = this.getSeries(registerExercises);
-    const dfSeries = dfd. 
+    // const dfSeries = dfd. 
 
     return null;
   }

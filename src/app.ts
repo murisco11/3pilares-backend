@@ -7,6 +7,7 @@ import { exerciseRoutes } from "./routes/exerciseRoutes";
 import { registerDayTrainingRoutes } from "./routes/RegisterDayTrainingRoutes";
 import { registerExerciseRoutes } from "./routes/RegisterExerciseRoutes";
 import { registerSerieRoutes } from "./routes/registerSerieRoutes";
+import { authRoutes } from "./routes/authRoutes";
 
 const app = express(); // App do Express
 
@@ -20,5 +21,6 @@ app.use("/exercise", exerciseRoutes); // Rota "exercise" utilizará exerciseRout
 app.use("/registerexercise", registerExerciseRoutes); // Rota "registerExercise" utilizará exerciseRoutes
 app.use("/registerdaytraining", registerDayTrainingRoutes); // Rota "registerDayTraining" utilizará exerciseRoutes
 app.use("/registerserie", registerSerieRoutes); // Rota "registerSerie" utilizará exerciseRoutes
+app.use("/auth", authRoutes); // Rota "auth" utilizará authRoutes
 
 export { app };

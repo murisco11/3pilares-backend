@@ -5,7 +5,8 @@ const registerExerciseRoutes = Router();
 const registerExerciseController = new RegisterExerciseController();
 
 registerExerciseRoutes.get("/:id", registerExerciseController.getById);
-registerExerciseRoutes.get("/daytraining/:id", registerExerciseController.getAllByUserId);
+registerExerciseRoutes.get("/daytraining/:id", registerExerciseController.getAllByByRegisterDayTraining);
+registerExerciseRoutes.get("/analyzeExercises/:id", registerExerciseController.analyzeExercises);
 registerExerciseRoutes.delete("/:id", registerExerciseController.delete);
 registerExerciseRoutes.put("/", registerExerciseController.update);
 // registerExerciseRoutes.post("/", registerExerciseController.create);

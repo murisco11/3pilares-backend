@@ -10,6 +10,15 @@ export class UserController {
     this.userService = new UserService();
   }
 
+  getAll = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const users = await this.userService.getAll();
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(500).json({ message: "Server Error" });
+    }
+  };
+
   getById = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const idUser: number = Number(req.params.id);

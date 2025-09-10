@@ -9,8 +9,13 @@ export class UserService {
     this.userRepository = DataBase.getRepository(User);
   }
 
+  async getAll(): Promise<User[]> {
+    const users = await this.userRepository.find();
+    return users;
+  }
+
   async getById(idUser: number): Promise<User | null> {
-    const user = this.userRepository.findOneBy({
+    const user = await this.userRepository.findOneBy({
       id: idUser,
     });
 
@@ -52,5 +57,14 @@ export class UserService {
     } else {
       return null;
     }
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.userRepository.findOneBy({ email });
+    return user;
+  }
+
+  async verifyPassword(user: User, password: string): Promise<boolean> {
+    return user.password === password;
   }
 }

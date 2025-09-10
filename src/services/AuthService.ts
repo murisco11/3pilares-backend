@@ -6,9 +6,9 @@ dotenv.config();
 export class AuthService {
     async generateToken(payload: object): Promise<string> {
         const token = jwt.sign(
-            payload,
-            process.env.JWT_SECRET as string,
-            { expiresIn: process.env.JWT_EXPIRES as string }
+            payload, 
+            process.env.JWT_SECRET || 'default_secret', 
+            { expiresIn: '1h' }
         )
         return token;
     }

@@ -29,6 +29,9 @@ export class User {
   @Column({ type: "decimal", precision: 5, scale: 2, nullable: true })
   weight!: number;
 
+  @Column({ type: "enum", enum: ["user", "coach", "admin"] })
+  role!: "user" | "coach" | "admin";
+
   @OneToMany(() => RegisterExercise, (registerExercises) => registerExercises.users)
   registerExercises!: RegisterExercise[];
 

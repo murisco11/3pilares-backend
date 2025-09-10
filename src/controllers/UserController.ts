@@ -15,15 +15,8 @@ export class UserController {
       const idUser: number = Number(req.params.id);
       const userIdFromToken = req.user?.id;
 
-      console.log("User ID from token:", userIdFromToken);
-      console.log("user id: ", idUser);
-
-      if (userIdFromToken?.role !== 'admin' && idUser !== userIdFromToken?.id) {
-        return res.status(403).json({ message: "Forbidden" });
-      }
-
-      if (idUser !== userIdFromToken) {
-        return res.status(403).json({ message: "Forbidden" });
+      if (req.user.role !== 'admin' && req.user.id !== idUser) {
+        return res.status(403).json({ message: "Forbidden: You don't have permission to access this user" });
       }
 
       const user = await this.userService.getById(idUser);
@@ -31,10 +24,10 @@ export class UserController {
       if (user) {
         return res.status(200).json(user);
       } else {
-        return res.status(300).json({ message: "User not found" });
+        return res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
-      return res.status(500).json({ message: "Error on server" });
+      return res.status(500).json({ message: "Server Error" });
     }
   };
 

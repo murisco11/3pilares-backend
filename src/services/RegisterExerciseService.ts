@@ -4,16 +4,8 @@ import { DataBase } from "../database/data-source";
 import { Exercise } from "../entities/Exercise";
 import { RegisterSerie } from "../entities/RegisterSeries";
 import { flattenNestedArray, analyzeDataGroups } from "../script";
+import { RegisterSerieForDF } from "../types/SeriesTypes";
 
-interface registerSerieForDF {
-  weight: number;
-  id: number;
-  reps: number;
-  order: number;
-  idExercise: number;
-  idRegisterExercise: number;
-  idRegisterDayTraining: number;
-}
 
 export class RegisterExerciseService {
   private readonly registerExerciseRepository: Repository<RegisterExercise>;
@@ -96,7 +88,7 @@ export class RegisterExerciseService {
       (
         registerExercise: RegisterExercise,
         serie: RegisterSerie
-      ): registerSerieForDF => ({
+      ): RegisterSerieForDF => ({
         weight: serie.weight,
         id: serie.id,
         reps: serie.reps,

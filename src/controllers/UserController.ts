@@ -13,7 +13,6 @@ export class UserController {
   getAll = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const user = req.user;
-      console.log(user);
 
       if (user.role !== 'admin') {
         return res.status(403).json({ message: "Forbidden: You don't have permission to access all users" });
@@ -22,7 +21,6 @@ export class UserController {
       const users = await this.userService.getAll();
       return res.status(200).json(users);
     } catch (error) {
-      // console.log(error);
       return res.status(500).json({ message: "Server Error" });
     }
   };
@@ -30,7 +28,6 @@ export class UserController {
   getById = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const idUser: number = Number(req.params.id);
-      const userIdFromToken = req.user?.id;
 
       if (req.user.role !== 'admin' && req.user.id !== idUser) {
         return res.status(403).json({ message: "Forbidden: You don't have permission to access this user" });
@@ -51,7 +48,6 @@ export class UserController {
   create = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const user = req.user;
-      console.log(user);
 
       if (user.role !== 'admin') {
         return res.status(403).json({ message: "Forbidden: You don't have admin permission" });
@@ -70,7 +66,6 @@ export class UserController {
   update = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const user = req.user;
-      console.log(user);
 
       if (user.role !== 'admin') {
         return res.status(403).json({ message: "Forbidden: You don't have admin permission" });
@@ -93,7 +88,6 @@ export class UserController {
   delete = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
       const user = req.user;
-      console.log(user);
 
       if (user.role !== 'admin') {
         return res.status(403).json({ message: "Forbidden: You don't have admin permission" });

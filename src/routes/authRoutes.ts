@@ -10,3 +10,4 @@ authRoutes.post('/login', authController.login.bind(authController));
 
 
 export { authRoutes }
+

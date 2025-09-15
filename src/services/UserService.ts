@@ -23,6 +23,7 @@ export class UserService {
   }
 
   async create(userData: Omit<User, "id">): Promise<User> {
+    console.log(userData);
     const user = this.userRepository.create(userData);
     await this.userRepository.save(user);
 

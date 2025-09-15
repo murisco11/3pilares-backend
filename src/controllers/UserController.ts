@@ -10,11 +10,19 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  getAll = async (req: Request, res: Response): Promise<Response> => {
+  getAll = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
+      const user = req.user;
+      console.log(user);
+
+      if (user.role !== 'admin') {
+        return res.status(403).json({ message: "Forbidden: You don't have permission to access all users" });
+      }
+
       const users = await this.userService.getAll();
       return res.status(200).json(users);
     } catch (error) {
+      // console.log(error);
       return res.status(500).json({ message: "Server Error" });
     }
   };
@@ -40,8 +48,15 @@ export class UserController {
     }
   };
 
-  create = async (req: Request, res: Response): Promise<Response> => {
+  create = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
+      const user = req.user;
+      console.log(user);
+
+      if (user.role !== 'admin') {
+        return res.status(403).json({ message: "Forbidden: You don't have admin permission" });
+      }
+
       const userData: User = req.body;
 
       const newUser = await this.userService.create(userData);
@@ -52,8 +67,15 @@ export class UserController {
     }
   };
 
-  update = async (req: Request, res: Response): Promise<Response> => {
+  update = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
+      const user = req.user;
+      console.log(user);
+
+      if (user.role !== 'admin') {
+        return res.status(403).json({ message: "Forbidden: You don't have admin permission" });
+      }
+
       const userData: User = req.body;
 
       const updateUser = await this.userService.update(userData.id, userData);
@@ -68,8 +90,15 @@ export class UserController {
     }
   };
 
-  delete = async (req: Request, res: Response): Promise<Response> => {
+  delete = async (req: AuthenticatedRequest, res: Response): Promise<Response> => {
     try {
+      const user = req.user;
+      console.log(user);
+
+      if (user.role !== 'admin') {
+        return res.status(403).json({ message: "Forbidden: You don't have admin permission" });
+      }
+
       const idUser: number = Number(req.params.id);
 
       const deleteUser = await this.userService.delete(idUser);
